@@ -35,10 +35,10 @@ export const Testimonials = () => {
           className="text-center max-w-2xl mx-auto mb-16"
         >
           <p className="text-primary font-semibold mb-4">Success stories</p>
-          <h2 className="text-4xl lg:text-5xl font-bold mb-6">
-            Real people.
-            <span className="gradient-text"> Real freedom.</span>
-          </h2>
+<h2 className="text-4xl lg:text-5xl font-bold mb-6">
+  <span className="text-white">Real people.</span>
+  <span className="gradient-text"> Real freedom.</span>
+</h2>
         </motion.div>
 
         {/* Testimonials grid */}

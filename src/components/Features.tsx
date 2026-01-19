@@ -50,10 +50,10 @@ export const Features = () => {
           className="text-center max-w-2xl mx-auto mb-16"
         >
           <p className="text-primary font-semibold mb-4">Features</p>
-          <h2 className="text-4xl lg:text-5xl font-bold mb-6">
-            Built for the
-            <span className="gradient-text"> modern debtor</span>
-          </h2>
+<h2 className="text-4xl lg:text-5xl font-bold mb-6">
+  <span className="text-white">Built for the</span>
+  <span className="gradient-text"> modern debtor</span>
+</h2>
           <p className="text-lg text-muted-foreground">
             We've thought of everything so you don't have to think at all.
           </p>

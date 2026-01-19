@@ -24,10 +24,10 @@ export const CTASection = () => {
           className="max-w-3xl mx-auto text-center"
         >
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-            Ready to crush
-            <br />
-            <span className="gradient-text">your debt?</span>
-          </h2>
+  <span className="text-white">Ready to crush</span>
+  <br />
+  <span className="gradient-text">your debt?</span>
+</h2>
           <p className="text-xl text-muted-foreground mb-8 max-w-xl mx-auto">
             Join thousands of people who've discovered the power of spare change. 
             Start your journey to financial freedom today.

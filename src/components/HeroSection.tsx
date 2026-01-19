@@ -72,9 +72,9 @@ export const HeroSection = () => {
                 Start saving now
                 <ArrowRight className="w-5 h-5" />
               </Button>
-              <Button variant="outline" size="xl">
-                See how it works
-              </Button>
+              <Button variant="outline" size="xl" className="text-white border-white hover:bg-white/10">
+  See how it works
+</Button>
             </div>
 
             {/* Trust badges */}
