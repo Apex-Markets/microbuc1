@@ -11,27 +11,17 @@ const transactions = [
 
 export const RoundUpAnimation = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [totalSaved, setTotalSaved] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => {
-        const next = (prev + 1) % transactions.length;
-        if (next === 0) {
-          setTotalSaved(0);
-        }
-        return next;
-      });
+      setCurrentIndex((prev) => (prev + 1) % transactions.length);
     }, 2500);
-
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    const tx = transactions[currentIndex];
-    const savings = tx.rounded - tx.amount;
-    setTotalSaved((prev) => Number((prev + savings).toFixed(2)));
-  }, [currentIndex]);
+  const totalSaved = transactions
+    .slice(0, currentIndex + 1)
+    .reduce((sum, tx) => sum + (tx.rounded - tx.amount), 0);
 
   const currentTx = transactions[currentIndex];
   const roundUp = (currentTx.rounded - currentTx.amount).toFixed(2);
@@ -40,7 +30,6 @@ export const RoundUpAnimation = () => {
     <div className="relative w-full max-w-md mx-auto">
       {/* Glowing background */}
       <div className="absolute inset-0 bg-gradient-radial from-primary/20 via-transparent to-transparent blur-3xl" />
-      
       {/* Phone mockup */}
       <div className="relative bg-card rounded-[2.5rem] p-2 shadow-2xl border border-border/50">
         <div className="bg-background rounded-[2rem] overflow-hidden">
@@ -53,7 +42,6 @@ export const RoundUpAnimation = () => {
               <div className="w-4 h-2 bg-muted-foreground/50 rounded-sm" />
             </div>
           </div>
-
           {/* App content */}
           <div className="p-6 space-y-6 min-h-[400px]">
             {/* Header */}
@@ -68,7 +56,6 @@ export const RoundUpAnimation = () => {
                 ${totalSaved.toFixed(2)}
               </motion.div>
             </div>
-
             {/* Transaction card */}
             <AnimatePresence mode="wait">
               <motion.div
@@ -79,11 +66,11 @@ export const RoundUpAnimation = () => {
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 className="glass-card p-5 space-y-4"
               >
+                {/* Visible item and numbers */}
                 <div className="flex justify-between items-center">
-                  <span className="text-muted-foreground">{currentTx.item}</span>
-                  <span className="font-mono font-semibold">${currentTx.amount.toFixed(2)}</span>
+                  <span className="font-semibold text-white">{currentTx.item}</span>
+                  <span className="font-mono font-semibold text-white">${currentTx.amount.toFixed(2)}</span>
                 </div>
-                
                 <div className="flex items-center gap-3">
                   <div className="flex-1 h-2 bg-muted rounded-full overflow-hidden">
                     <motion.div
@@ -94,12 +81,10 @@ export const RoundUpAnimation = () => {
                     />
                   </div>
                 </div>
-
                 <div className="flex justify-between items-center pt-2 border-t border-border/50">
                   <span className="text-sm text-muted-foreground">Rounded to</span>
-                  <span className="font-mono font-semibold">${currentTx.rounded.toFixed(2)}</span>
+                  <span className="font-mono font-semibold text-white">${currentTx.rounded.toFixed(2)}</span>
                 </div>
-
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
@@ -118,7 +103,6 @@ export const RoundUpAnimation = () => {
                 </motion.div>
               </motion.div>
             </AnimatePresence>
-
             {/* Progress indicator */}
             <div className="flex justify-center gap-2">
               {transactions.map((_, idx) => (
