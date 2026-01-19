@@ -40,9 +40,9 @@ export const HowItWorks = () => {
         >
           <p className="text-primary font-semibold mb-4">How it works</p>
           <h2 className="text-4xl lg:text-5xl font-bold mb-6">
-            Three steps to
-            <span className="gradient-text"> debt freedom</span>
-          </h2>
+  <span className="text-white">Three steps to</span>
+  <span className="gradient-text"> debt freedom</span>
+</h2>
           <p className="text-lg text-muted-foreground">
             Set it once, forget it forever. Micropay works silently in the background 
             while you focus on what matters.
@@ -65,9 +65,9 @@ export const HowItWorks = () => {
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-accent opacity-0 group-hover:opacity-100 transition-opacity" />
                 
                 {/* Step number */}
-                <span className="text-6xl font-bold text-muted/50 font-mono absolute top-4 right-6">
-                  {step.step}
-                </span>
+               <span className="text-6xl font-extrabold font-mono absolute top-4 right-6 text-primary/70 drop-shadow">
+  {step.step}
+</span>
 
                 {/* Icon */}
                 <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">

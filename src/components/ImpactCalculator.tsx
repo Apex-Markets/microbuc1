@@ -109,11 +109,11 @@ export const ImpactCalculator = () => {
           >
             <div>
               <p className="text-primary font-semibold mb-4">See the math</p>
-              <h2 className="text-4xl lg:text-5xl font-bold mb-6">
-                Small change.
-                <br />
-                <span className="gradient-text">Big difference.</span>
-              </h2>
+             <h2 className="text-4xl lg:text-5xl font-bold mb-6">
+  <span className="text-white">Small change.</span>
+  <br />
+  <span className="gradient-text">Big difference.</span>
+</h2>
               <p className="text-lg text-muted-foreground leading-relaxed">
                 Most people don't realize how much those spare cents add up. 
                 With Micropay, you're putting every fraction to work — automatically.
