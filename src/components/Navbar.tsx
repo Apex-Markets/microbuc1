@@ -20,7 +20,7 @@ export const Navbar = () => {
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center">
               <span className="text-primary-foreground font-bold text-sm">M</span>
             </div>
-            <span className="font-bold text-lg">Micropay</span>
+<span className="font-bold text-lg text-white">Microbuc</span>
           </div>
 
           {/* Desktop nav */}
