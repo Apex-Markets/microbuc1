@@ -72,13 +72,14 @@ export const HeroSection = () => {
                 Start saving now
                 <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
               </Button>
-              <Button 
-                variant="outline" 
-                size="xl"
-                onClick={() => document.querySelector('#how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
-              >
-                See how it works
-              </Button>
+             <Button
+  variant="outline" 
+  size="xl"
+  className="text-white"
+  onClick={() => document.querySelector('#how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
+>
+  See how it works
+</Button>
             </div>
 
             {/* Trust badges */}

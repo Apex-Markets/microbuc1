@@ -14,7 +14,7 @@ export const ImpactCalculator = () => {
   const monthsToPayExtra = debtAmount[0] / monthlySavings;
 
   return (
-    <section className="py-24 lg:py-32 relative">
+    <section id="calculator" className="py-24 lg:py-32 relative">
       <div className="container">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* Calculator */}
@@ -109,11 +109,11 @@ export const ImpactCalculator = () => {
           >
             <div>
               <p className="text-primary font-semibold mb-4">See the math</p>
-             <h2 className="text-4xl lg:text-5xl font-bold mb-6">
-  <span className="text-white">Small change.</span>
-  <br />
-  <span className="gradient-text">Big difference.</span>
-</h2>
+              <h2 className="text-4xl lg:text-5xl font-bold mb-6">
+                <span className="text-white">Small change.</span>
+                <br />
+                <span className="gradient-text">Big difference.</span>
+              </h2>
               <p className="text-lg text-muted-foreground leading-relaxed">
                 Most people don't realize how much those spare cents add up. 
                 With Micropay, you're putting every fraction to work — automatically.
