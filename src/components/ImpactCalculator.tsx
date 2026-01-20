@@ -26,10 +26,10 @@ export const ImpactCalculator = () => {
             className="order-2 lg:order-1"
           >
             <div className="glass-card p-8 lg:p-10 space-y-8">
-              <div className="space-y-2">
-                <h3 className="text-2xl font-bold">Calculate your impact</h3>
-                <p className="text-muted-foreground">See how much you could save based on your spending habits.</p>
-              </div>
+  <div className="space-y-2">
+    <h3 className="text-2xl font-bold text-white">Calculate your impact</h3>
+    <p className="text-muted-foreground">See how much you could save based on your spending habits.</p>
+  </div>
 
               {/* Transactions slider */}
               <div className="space-y-4">
