@@ -34,7 +34,7 @@ export const ImpactCalculator = () => {
               {/* Transactions slider */}
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <label className="text-sm font-medium">Daily transactions</label>
+                  <label className="text-sm font-medium text-white">Daily transactions</label>
                   <span className="font-mono font-bold text-primary">{transactions[0]}</span>
                 </div>
                 <Slider
@@ -50,7 +50,7 @@ export const ImpactCalculator = () => {
               {/* Average roundup slider */}
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <label className="text-sm font-medium">Avg. round-up amount</label>
+                  <label className="text-sm font-medium text-white">Avg. round-up amount</label>
                   <span className="font-mono font-bold text-primary">${avgRoundup[0].toFixed(2)}</span>
                 </div>
                 <Slider
@@ -66,7 +66,7 @@ export const ImpactCalculator = () => {
               {/* Debt amount slider */}
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <label className="text-sm font-medium">Total debt</label>
+                  <label className="text-sm font-medium text-white">Total debt</label>
                   <span className="font-mono font-bold text-primary">${debtAmount[0].toLocaleString()}</span>
                 </div>
                 <Slider
