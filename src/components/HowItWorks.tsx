@@ -65,9 +65,9 @@ export const HowItWorks = () => {
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-accent opacity-0 group-hover:opacity-100 transition-opacity" />
                 
                 {/* Step number */}
-                <span className="text-6xl font-bold text-muted/50 font-mono absolute top-4 right-6">
-                  {step.step}
-                </span>
+                <span className="text-6xl font-bold text-white font-mono absolute top-4 right-6">
+  {step.step}
+</span>
 
                 {/* Icon */}
                 <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
