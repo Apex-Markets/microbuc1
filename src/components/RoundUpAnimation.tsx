@@ -27,12 +27,10 @@ export const RoundUpAnimation = () => {
   const roundUp = (currentTx.rounded - currentTx.amount).toFixed(2);
 
   return (
-    <div className="relative w-full max-w-md mx-auto">
-      {/* Glowing or background */}
-      <div className="absolute inset-0 bg-gradient-radial from-primary/25 via-transparent to-transparent blur-3xl" />
+    <div className="relative w-full max-w-md mx-auto" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif' }}>
       {/* iPhone Frame */}
-      <div className="relative bg-card rounded-[2.5rem] p-2 shadow-2xl border-8 border-black/70 overflow-hidden max-w-xs mx-auto" style={{minWidth: 320}}>
-        {/* Status bar (9:41, etc) */}
+      <div className="relative bg-black rounded-[2.5rem] p-2 shadow-xl border-8 border-black/80 overflow-hidden max-w-xs mx-auto" style={{ minWidth: 320 }}>
+        {/* Status bar (9:41, etc): customized, no Apple logo */}
         <div className="flex justify-between items-center px-6 py-3 bg-black/40">
           <span className="text-xs text-white font-mono">9:41</span>
           <div className="w-20 h-6 bg-white/30 rounded-full" />
@@ -41,8 +39,10 @@ export const RoundUpAnimation = () => {
             <div className="w-4 h-2 bg-white/60 rounded-sm" />
           </div>
         </div>
-        {/* App's iOS-like content */}
+        {/* App content */}
         <div className="bg-gradient-to-br from-[#1d1e20] to-[#27282c] rounded-[2rem] overflow-hidden px-1 pt-2 pb-4 min-h-[450px] flex flex-col items-center">
+          {/* EMPTY space where Apple Pay button was for layout consistency */}
+          <div className="flex justify-center mb-4 mt-4" style={{ minHeight: 40, width: 160 }}></div>
           {/* Header/Sum */}
           <div className="flex flex-col items-center mt-6 mb-4">
             <span className="text-xs uppercase tracking-wide text-slate-300/80 mb-0.5">

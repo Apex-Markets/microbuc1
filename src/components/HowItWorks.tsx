@@ -24,7 +24,7 @@ const steps = [
 
 export const HowItWorks = () => {
   return (
-    <section className="py-24 lg:py-32 relative overflow-hidden">
+    <section id="how-it-works" className="py-24 lg:py-32 relative overflow-hidden scroll-mt-20">
       {/* Background */}
       <div className="absolute inset-0 bg-muted/30" />
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
@@ -39,10 +39,10 @@ export const HowItWorks = () => {
           className="text-center max-w-2xl mx-auto mb-16 lg:mb-24"
         >
           <p className="text-primary font-semibold mb-4">How it works</p>
-          <h2 className="text-4xl lg:text-5xl font-bold mb-6">
-  <span className="text-white">Three steps to</span>
-  <span className="gradient-text"> debt freedom</span>
-</h2>
+          <h2 className="text-4xl lg:text-5xl font-bold mb-6 text-white">
+            Three steps to
+            <span className="gradient-text"> debt freedom</span>
+          </h2>
           <p className="text-lg text-muted-foreground">
             Set it once, forget it forever. Micropay works silently in the background 
             while you focus on what matters.
@@ -65,9 +65,9 @@ export const HowItWorks = () => {
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-accent opacity-0 group-hover:opacity-100 transition-opacity" />
                 
                 {/* Step number */}
-               <span className="text-6xl font-extrabold font-mono absolute top-4 right-6 text-primary/70 drop-shadow">
-  {step.step}
-</span>
+                <span className="text-6xl font-bold text-muted/50 font-mono absolute top-4 right-6">
+                  {step.step}
+                </span>
 
                 {/* Icon */}
                 <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
@@ -75,8 +75,8 @@ export const HowItWorks = () => {
                 </div>
 
                 {/* Content */}
-                <h3 className="text-xl font-bold mb-3">{step.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">{step.description}</p>
+                <h3 className="text-xl font-bold mb-3 text-white">{step.title}</h3>
+                <p className="leading-relaxed text-white">{step.description}</p>
 
                 {/* Checkmark */}
                 <div className="mt-6 flex items-center gap-2 text-sm text-primary">

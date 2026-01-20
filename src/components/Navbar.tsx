@@ -1,39 +1,93 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Menu } from "lucide-react";
-import { useState } from "react";
+import { Menu, X } from "lucide-react";
+import { useState, useEffect } from "react";
+
+const navLinks = [
+  { label: "How it works", href: "#how-it-works" },
+  { label: "Calculator", href: "#calculator" },
+  { label: "Features", href: "#features" },
+  { label: "FAQ", href: "#faq" },
+];
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToSection = (href: string) => {
+    setIsOpen(false);
+    const element = document.querySelector(href);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <motion.nav
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="fixed top-0 left-0 right-0 z-50 py-4"
+      className={`fixed top-0 left-0 right-0 z-50 py-4 transition-all duration-300 ${
+        scrolled ? "py-2" : "py-4"
+      }`}
     >
       <div className="container">
-        <div className="glass-card px-6 py-3 flex items-center justify-between">
+        <motion.div 
+          className={`glass-card px-6 py-3 flex items-center justify-between transition-all duration-300 ${
+            scrolled ? "shadow-lg" : ""
+          }`}
+          layout
+        >
           {/* Logo */}
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center">
+          <a 
+            href="#" 
+            onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+            className="flex items-center gap-2 group"
+          >
+            <motion.div 
+              className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
               <span className="text-primary-foreground font-bold text-sm">M</span>
-            </div>
-<span className="font-bold text-lg text-white">Microbuc</span>
-          </div>
+            </motion.div>
+            <span className="font-bold text-lg group-hover:text-primary transition-colors">Micropay</span>
+          </a>
 
           {/* Desktop nav */}
           <div className="hidden md:flex items-center gap-8">
-            <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">How it works</a>
-            <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Features</a>
-            <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Pricing</a>
+            {navLinks.map((link) => (
+              <button
+                key={link.href}
+                onClick={() => scrollToSection(link.href)}
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors relative group"
+              >
+                {link.label}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
+              </button>
+            ))}
           </div>
 
           {/* CTAs */}
           <div className="hidden md:flex items-center gap-3">
             <Button variant="ghost" size="sm">Log in</Button>
-            <Button variant="default" size="sm">Get started</Button>
+            <Button variant="default" size="sm" className="relative overflow-hidden group">
+              <span className="relative z-10">Get started</span>
+              <motion.span 
+                className="absolute inset-0 bg-gradient-to-r from-primary via-primary/80 to-primary"
+                initial={{ x: "-100%" }}
+                whileHover={{ x: 0 }}
+                transition={{ duration: 0.3 }}
+              />
+            </Button>
           </div>
 
           {/* Mobile menu button */}
@@ -43,28 +97,63 @@ export const Navbar = () => {
             className="md:hidden"
             onClick={() => setIsOpen(!isOpen)}
           >
-            <Menu className="w-5 h-5" />
+            <AnimatePresence mode="wait">
+              {isOpen ? (
+                <motion.div
+                  key="close"
+                  initial={{ rotate: -90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: 90, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <X className="w-5 h-5" />
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="menu"
+                  initial={{ rotate: 90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: -90, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Menu className="w-5 h-5" />
+                </motion.div>
+              )}
+            </AnimatePresence>
           </Button>
-        </div>
+        </motion.div>
 
         {/* Mobile menu */}
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="glass-card mt-2 p-4 md:hidden"
-          >
-            <div className="flex flex-col gap-4">
-              <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">How it works</a>
-              <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Features</a>
-              <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Pricing</a>
-              <div className="flex gap-2 pt-4 border-t border-border">
-                <Button variant="ghost" size="sm" className="flex-1">Log in</Button>
-                <Button variant="default" size="sm" className="flex-1">Get started</Button>
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              className="glass-card mt-2 overflow-hidden md:hidden"
+            >
+              <div className="p-4 flex flex-col gap-2">
+                {navLinks.map((link, index) => (
+                  <motion.button
+                    key={link.href}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    onClick={() => scrollToSection(link.href)}
+                    className="text-left py-2 px-3 rounded-lg text-sm text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all"
+                  >
+                    {link.label}
+                  </motion.button>
+                ))}
+                <div className="flex gap-2 pt-4 mt-2 border-t border-border">
+                  <Button variant="ghost" size="sm" className="flex-1">Log in</Button>
+                  <Button variant="default" size="sm" className="flex-1">Get started</Button>
+                </div>
               </div>
-            </div>
-          </motion.div>
-        )}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </motion.nav>
   );
