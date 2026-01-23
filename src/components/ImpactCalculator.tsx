@@ -132,15 +132,15 @@ export const ImpactCalculator = () => {
                 </div>
               </div>
 
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center flex-shrink-0">
-                  <Clock className="w-6 h-6 text-accent" />
-                </div>
-                <div>
-                  <p className="font-bold text-xl">{monthsToPayExtra.toFixed(0)} months faster</p>
-                  <p className="text-muted-foreground">Debt payoff acceleration</p>
-                </div>
-              </div>
+             <div className="flex items-start gap-4">
+  <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center flex-shrink-0">
+    <Clock className="w-6 h-6 text-accent" />
+  </div>
+  <div>
+    <p className="font-bold text-xl text-white">{monthsToPayExtra.toFixed(0)} months faster</p>
+    <p className="text-muted-foreground">Debt payoff acceleration</p>
+  </div>
+</div>
 
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
