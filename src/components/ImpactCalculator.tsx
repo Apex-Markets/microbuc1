@@ -127,7 +127,7 @@ export const ImpactCalculator = () => {
                   <DollarSign className="w-6 h-6 text-primary" />
                 </div>
                 <div>
-                  <p className="font-bold text-xl">${yearlySavings.toFixed(0)}/year in round-ups</p>
+                  <p className="font-bold text-xl text-white">${yearlySavings.toFixed(0)}/year in round-ups</p>
                   <p className="text-muted-foreground">Based on your spending habits</p>
                 </div>
               </div>
@@ -147,9 +147,9 @@ export const ImpactCalculator = () => {
                   <Percent className="w-6 h-6 text-primary" />
                 </div>
                 <div>
-                  <p className="font-bold text-xl">Interest saved</p>
-                  <p className="text-muted-foreground">Less time = less interest paid</p>
-                </div>
+  <p className="font-bold text-xl text-white">Interest saved</p>
+  <p className="text-muted-foreground">Less time = less interest paid</p>
+</div>
               </div>
             </div>
           </motion.div>
