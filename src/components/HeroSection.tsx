@@ -94,9 +94,6 @@ export const HeroSection = () => {
                   </div>
                 ))}
               </div>
-              <p className="text-sm text-muted-foreground">
-                <span className="font-semibold text-foreground">12,000+</span> users crushing their debt
-              </p>
             </div>
           </motion.div>
 
