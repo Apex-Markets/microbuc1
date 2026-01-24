@@ -2,11 +2,9 @@ import { useState, useEffect } from "react";
 import { setCookie, getCookie } from "@/lib/cookies";
 
 export default function CookieBanner() {
-  // State is only true after 4s and after user hasn't consented yet
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    // Only show if not already accepted
     if (getCookie("cookieConsent") !== "yes") {
       const timeout = setTimeout(() => setShow(true), 4000);
       return () => clearTimeout(timeout);
@@ -24,7 +22,7 @@ export default function CookieBanner() {
     <div
       className="fixed inset-0 z-[10000] flex items-center justify-center"
       style={{
-        background: "rgba(0,0,0,0.38)",
+        background: "rgba(0,0,0,0.33)",
         pointerEvents: "auto",
       }}
       aria-modal="true"
@@ -32,29 +30,46 @@ export default function CookieBanner() {
       role="dialog"
     >
       <div
-        className="bg-white dark:bg-gray-900 dark:text-white"
         style={{
-          maxWidth: 500,
+          background: "#fff",
+          color: "#222",
+          maxWidth: "480px",
           width: "90%",
-          padding: "2.5rem 2rem 1.5rem 2rem",
-          borderRadius: "1.2rem",
-          boxShadow: "0 2px 36px 4px #0005",
-          border: "2px solid #eee",
-          position: "relative",
+          borderRadius: "1.3rem",
+          border: "1.5px solid #bbb",
+          boxShadow: "0 4px 40px 0 #0003",
+          padding: "2rem 1.7rem 1.5rem 1.7rem",
+          fontFamily:
+            'Inter, "Segoe UI", system-ui, Arial, sans-serif',
         }}
       >
-        <div style={{ fontWeight: 700, fontSize: "1.19rem", marginBottom: "0.7rem" }}>
+        <div
+          style={{
+            fontWeight: 700,
+            fontSize: "1.15rem",
+            marginBottom: "0.7rem",
+            letterSpacing: "-0.01em",
+          }}
+        >
           How we use cookies and your consent
         </div>
-        <div style={{ fontWeight: 400, fontSize: "1.05rem", lineHeight: 1.6, marginBottom: "1.4rem" }}>
-          We use cookies and similar technologies on our websites to improve them,
-          measure their performance, understand our audience and enhance the user experience.
-          By using our website, you agree to our use of <b>essential cookies</b>.
-          With your consent, we also use analytics cookies to personalize content and analyze our traffic.
-          Read our{" "}
+        <div
+          style={{
+            fontWeight: 400,
+            fontSize: "0.99rem",
+            color: "#444",
+            lineHeight: "1.7",
+            marginBottom: "1.4rem",
+          }}
+        >
+          We use cookies and similar technologies on our websites to improve them, measure performance, understand our audience and enhance the user experience. By using our website, you agree to our use of <b>essential cookies</b>. With your consent, we also use analytics cookies to personalize content and analyze our traffic. Read our{" "}
           <a
             href="/privacy"
-            style={{ textDecoration: "underline", color: "#2e5ae0" }}
+            style={{
+              textDecoration: "underline",
+              color: "#2e69e2",
+              fontWeight: 500,
+            }}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -65,17 +80,22 @@ export default function CookieBanner() {
         <div className="flex flex-row justify-center">
           <button
             style={{
-              background: "#f58220",
+              background: "#e96717",
               color: "#fff",
               border: "none",
-              padding: "0.95rem 2.2rem",
+              padding: "0.95rem 2.4rem",
               borderRadius: "2rem",
               fontWeight: 600,
-              fontSize: "1.15rem",
+              fontSize: "1.11rem",
+              letterSpacing: "0.02em",
               boxShadow: "0 2px 8px 0 #0002",
               margin: "0 0.5rem",
               cursor: "pointer",
+              outline: "none",
+              transition: "background 0.18s",
             }}
+            onMouseOver={e => (e.currentTarget.style.background = "#c15105")}
+            onMouseOut={e => (e.currentTarget.style.background = "#e96717")}
             onClick={acceptCookies}
             autoFocus
           >
