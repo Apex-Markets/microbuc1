@@ -3,15 +3,41 @@ import { useState } from "react";
 import { Slider } from "@/components/ui/slider";
 import { DollarSign, Clock, Percent } from "lucide-react";
 
+// Typical APRs for each category
+const DEBT_TYPES = [
+  { label: "Credit Card", apr: 29.99 },
+  { label: "Car Loan", apr: 9.0 },
+  { label: "Student Loan", apr: 7.0 },
+];
+
 export const ImpactCalculator = () => {
   const [transactions, setTransactions] = useState([30]);
-  const [avgRoundup, setAvgRoundup] = useState([0.50]);
+  const [avgRoundup, setAvgRoundup] = useState([0.5]);
   const [debtAmount, setDebtAmount] = useState([15000]);
+  const [debtType, setDebtType] = useState(0); // 0: Credit Card, 1: Car Loan, 2: Student Loan
 
+  const apr = DEBT_TYPES[debtType].apr;
+
+  // Calculations
   const dailySavings = transactions[0] * avgRoundup[0];
   const monthlySavings = dailySavings * 30;
   const yearlySavings = monthlySavings * 12;
-  const monthsToPayExtra = debtAmount[0] / monthlySavings;
+
+  // Assume minimum payment only would take 60 months (for illustration)
+  // You can use actual amortization for more accurate calcs.
+  const minMonths = 60;
+
+  // How many months would your roundups knock off?
+  const monthsPayoff = debtAmount[0] / monthlySavings;
+  // Clamp to a minimum, don’t go below 1 month
+  const monthsToPayExtra = Math.max(monthsPayoff, 1);
+
+  // Total interest without roundups: simple interest over minMonths
+  const totalInterestMinimum = (debtAmount[0] * (apr / 100)) * (minMonths / 12);
+  // Interest with accelerated payoff:
+  const totalInterestImpact = (debtAmount[0] * (apr / 100)) * (monthsToPayExtra / 12);
+  // Interest saved
+  const interestSaved = totalInterestMinimum - totalInterestImpact;
 
   return (
     <section id="calculator" className="py-24 lg:py-32 relative">
@@ -26,10 +52,29 @@ export const ImpactCalculator = () => {
             className="order-2 lg:order-1"
           >
             <div className="glass-card p-8 lg:p-10 space-y-8">
-  <div className="space-y-2">
-    <h3 className="text-2xl font-bold text-white">Calculate your impact</h3>
-    <p className="text-muted-foreground">See how much you could save based on your spending habits.</p>
-  </div>
+              <div className="space-y-2">
+                <h3 className="text-2xl font-bold text-white">Calculate your impact</h3>
+                <p className="text-muted-foreground">See how much you could save based on your spending habits.</p>
+              </div>
+
+              {/* Debt Type Category */}
+              <div className="space-y-4">
+                <label className="text-sm font-medium text-white">Debt Type</label>
+                <div className="flex gap-3">
+                  {DEBT_TYPES.map((type, idx) => (
+                    <button
+                      key={type.label}
+                      className={`px-4 py-2 rounded-lg font-semibold border ${debtType === idx ? "bg-primary text-white" : "bg-muted text-primary"} transition`}
+                      onClick={() => setDebtType(idx)}
+                    >
+                      {type.label}
+                    </button>
+                  ))}
+                </div>
+                <div className="text-xs text-muted-foreground mt-1">
+                  <span className="font-mono font-bold">{apr.toFixed(2)}%</span> avg. APR
+                </div>
+              </div>
 
               {/* Transactions slider */}
               <div className="space-y-4">
@@ -56,7 +101,7 @@ export const ImpactCalculator = () => {
                 <Slider
                   value={avgRoundup}
                   onValueChange={setAvgRoundup}
-                  min={0.10}
+                  min={0.1}
                   max={0.99}
                   step={0.01}
                   className="py-2"
@@ -115,7 +160,7 @@ export const ImpactCalculator = () => {
                 <span className="gradient-text">Big difference.</span>
               </h2>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                Most people don't realize how much those spare cents add up. 
+                Most people don't realize how much those spare cents add up.
                 With Micropay, you're putting every fraction to work — automatically.
               </p>
             </div>
@@ -132,24 +177,28 @@ export const ImpactCalculator = () => {
                 </div>
               </div>
 
-             <div className="flex items-start gap-4">
-  <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center flex-shrink-0">
-    <Clock className="w-6 h-6 text-accent" />
-  </div>
-  <div>
-    <p className="font-bold text-xl text-white">{monthsToPayExtra.toFixed(0)} months faster</p>
-    <p className="text-muted-foreground">Debt payoff acceleration</p>
-  </div>
-</div>
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center flex-shrink-0">
+                  <Clock className="w-6 h-6 text-accent" />
+                </div>
+                <div>
+                  <p className="font-bold text-xl text-white">
+                    {Math.max(1, (minMonths - monthsToPayExtra)).toFixed(0)} months faster
+                  </p>
+                  <p className="text-muted-foreground">Debt payoff acceleration</p>
+                </div>
+              </div>
 
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
                   <Percent className="w-6 h-6 text-primary" />
                 </div>
                 <div>
-  <p className="font-bold text-xl text-white">Interest saved</p>
-  <p className="text-muted-foreground">Less time = less interest paid</p>
-</div>
+                  <p className="font-bold text-xl text-white">
+                    ${interestSaved > 0 ? interestSaved.toLocaleString(undefined, { maximumFractionDigits: 0 }) : "0"} interest saved
+                  </p>
+                  <p className="text-muted-foreground">Less time = less interest paid</p>
+                </div>
               </div>
             </div>
           </motion.div>
