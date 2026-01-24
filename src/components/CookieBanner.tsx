@@ -3,7 +3,7 @@ import { setCookie, getCookie } from "@/lib/cookies";
 
 export default function CookieBanner() {
   const [show, setShow] = useState(getCookie("cookieConsent") !== "yes");
- 
+
   const acceptCookies = () => {
     setCookie("cookieConsent", "yes", 365);
     setShow(false);
@@ -12,48 +12,26 @@ export default function CookieBanner() {
   if (!show) return null;
 
   return (
-    // Full screen overlay that only lets events through to the banner
     <div
-      className="fixed inset-0 z-[9999]"
-      aria-modal="true"
-      role="dialog"
-      tabIndex={-1}
+      className="fixed left-0 right-0 bottom-0 z-[10000] cookie-banner bg-white dark:bg-gray-900 text-gray-900 dark:text-white shadow-2xl flex flex-col md:flex-row items-center justify-between gap-4 px-8 py-6"
       style={{
-        pointerEvents: "auto" // overlay catches all pointer events
+        borderTopLeftRadius: "1rem",
+        borderTopRightRadius: "1rem",
+        margin: 0,
       }}
     >
-      {/* Absolutely positioned, transparent overlay "blocks" rest of website, but banner is still interactive */}
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          pointerEvents: "auto",
-        }}
-        onClick={e => e.stopPropagation()}
-      />
-      {/* Banner at the bottom; allows interaction */}
-      <div
-        className="fixed left-0 right-0 bottom-0 z-[10000] cookie-banner bg-white dark:bg-gray-900 text-gray-900 dark:text-white shadow-2xl flex flex-col md:flex-row items-center justify-between gap-4 px-8 py-6"
-        style={{
-          pointerEvents: "auto",
-          borderTopLeftRadius: "1rem",
-          borderTopRightRadius: "1rem",
-          margin: 0,
-        }}
-        onClick={e => e.stopPropagation()}
+      <span>
+        Cookies help us keep our website safe and give you a better experience. By visiting our website, you agree to our use of essential cookies.
+        With your consent, we also use analytics cookies for personalized ads/content and to analyze our traffic.
+        <a href="/privacy" className="ml-2 underline">Privacy Policy</a>
+      </span>
+      <button
+        className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded-lg transition-colors"
+        onClick={acceptCookies}
+        autoFocus
       >
-        <span>
-          Cookies help us keep our website safe and give you a better experience. By visiting our website, you agree to our use of essential cookies.
-          With your consent, we also use analytics cookies for personalized ads/content and to analyze our traffic.
-        </span>
-        <button
-          className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded-lg transition-colors"
-          onClick={acceptCookies}
-          autoFocus
-        >
-          Accept
-        </button>
-      </div>
+        Accept
+      </button>
     </div>
   );
 }
