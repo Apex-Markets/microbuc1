@@ -21,10 +21,7 @@ export default function CookieBanner() {
   return (
     <div
       className="fixed inset-0 z-[10000] flex items-center justify-center"
-      style={{
-        background: "rgba(0,0,0,0.33)",
-        pointerEvents: "auto",
-      }}
+      style={{ background: "rgba(0,0,0,0.24)", pointerEvents: "auto" }}
       aria-modal="true"
       tabIndex={-1}
       role="dialog"
@@ -33,22 +30,21 @@ export default function CookieBanner() {
         style={{
           background: "#fff",
           color: "#222",
-          maxWidth: "480px",
-          width: "90%",
-          borderRadius: "1.3rem",
-          border: "1.5px solid #bbb",
-          boxShadow: "0 4px 40px 0 #0003",
-          padding: "2rem 1.7rem 1.5rem 1.7rem",
-          fontFamily:
-            'Inter, "Segoe UI", system-ui, Arial, sans-serif',
+          maxWidth: 430,
+          width: "92%",
+          borderRadius: "1rem",
+          border: "1px solid #c0c0c0",
+          boxShadow: "0 4px 32px 2px #0002",
+          padding: "1.25rem 1.25rem 1.1rem 1.25rem",
+          fontFamily: 'Inter, "Segoe UI", system-ui, Arial, sans-serif',
         }}
       >
         <div
           style={{
             fontWeight: 700,
-            fontSize: "1.15rem",
-            marginBottom: "0.7rem",
-            letterSpacing: "-0.01em",
+            fontSize: "1.025rem",
+            marginBottom: "0.55rem",
+            letterSpacing: "0",
           }}
         >
           How we use cookies and your consent
@@ -56,10 +52,10 @@ export default function CookieBanner() {
         <div
           style={{
             fontWeight: 400,
-            fontSize: "0.99rem",
+            fontSize: "0.925rem",
             color: "#444",
-            lineHeight: "1.7",
-            marginBottom: "1.4rem",
+            lineHeight: 1.54,
+            marginBottom: "1.15rem",
           }}
         >
           We use cookies and similar technologies to improve our website, measure performance, understand usage, and personalize your experience. Some cookies may be used to deliver more relevant content or advertising based on your interests. You can manage your cookie preferences at any time. Essential cookies are always active to ensure the website works properly.
@@ -70,16 +66,16 @@ export default function CookieBanner() {
               background: "#e96717",
               color: "#fff",
               border: "none",
-              padding: "0.95rem 2.4rem",
-              borderRadius: "2rem",
+              padding: "0.64rem 2.05rem",
+              borderRadius: "1.15rem",
               fontWeight: 600,
-              fontSize: "1.11rem",
-              letterSpacing: "0.02em",
-              boxShadow: "0 2px 8px 0 #0002",
-              margin: "0 0.5rem",
+              fontSize: "0.98rem",
+              letterSpacing: "0.005em",
+              boxShadow: "0 2px 6px 0 #0001",
+              margin: "0 0.2rem",
               cursor: "pointer",
               outline: "none",
-              transition: "background 0.18s",
+              transition: "background 0.14s",
             }}
             onMouseOver={e => (e.currentTarget.style.background = "#c15105")}
             onMouseOut={e => (e.currentTarget.style.background = "#e96717")}
