@@ -1,8 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { setCookie, getCookie } from "@/lib/cookies";
 
 export default function CookieBanner() {
-  const [show, setShow] = useState(getCookie("cookieConsent") !== "yes");
+  // State is only true after 4s and after user hasn't consented yet
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    // Only show if not already accepted
+    if (getCookie("cookieConsent") !== "yes") {
+      const timeout = setTimeout(() => setShow(true), 4000);
+      return () => clearTimeout(timeout);
+    }
+  }, []);
 
   const acceptCookies = () => {
     setCookie("cookieConsent", "yes", 365);
@@ -13,57 +22,67 @@ export default function CookieBanner() {
 
   return (
     <div
-      className="fixed left-0 right-0 bottom-0 z-[10000] flex items-center justify-center"
+      className="fixed inset-0 z-[10000] flex items-center justify-center"
       style={{
-        minHeight: "120px", // Tall!
-        padding: "2rem 2rem 2.5rem 2rem",
-        background: "linear-gradient(90deg,#e11d48 0%,#7e22ce 100%)", // High contrast: red → purple
-        color: "#fff",
-        fontSize: "1.35rem", // Big text!
-        fontWeight: 600,
-        boxShadow: "0 -12px 36px 4px #0008, 0 0 0 4px #e11d4880", // Glowy + big shadow
-        borderTopLeftRadius: "1.5rem",
-        borderTopRightRadius: "1.5rem",
-        transition: "all 0.3s cubic-bezier(.17,.67,.83,.67)",
+        background: "rgba(0,0,0,0.38)",
+        pointerEvents: "auto",
       }}
+      aria-modal="true"
+      tabIndex={-1}
+      role="dialog"
     >
-      <span style={{flex: 1, marginRight: "1rem"}}>
-        🍪 Cookies help us keep our website safe and give you a better experience.
-        By visiting our website, you agree to our use of essential cookies.<br/>
-        With your consent, we also use analytics cookies for personalized ads/content and to analyze our traffic.
-        <a
-          href="/privacy"
-          style={{
-            marginLeft: "1rem",
-            textDecoration: "underline",
-            color: "#fffb",
-            fontWeight: 500
-          }}
-        >
-          Privacy Policy
-        </a>
-      </span>
-      <button
-        className="ml-8"
+      <div
+        className="bg-white dark:bg-gray-900 dark:text-white"
         style={{
-          background: "linear-gradient(90deg,#65dea4 0%,#09c 100%)",
-          color: "#222",
-          fontWeight: 700,
-          fontSize: "1.2rem",
-          border: "none",
-          borderRadius: "0.75rem",
-          padding: "1rem 2rem",
-          cursor: "pointer",
-          boxShadow: "0 2px 18px 2px #09c8",
-          transition: "transform .13s cubic-bezier(.17,.67,.83,.67), background .25s",
+          maxWidth: 500,
+          width: "90%",
+          padding: "2.5rem 2rem 1.5rem 2rem",
+          borderRadius: "1.2rem",
+          boxShadow: "0 2px 36px 4px #0005",
+          border: "2px solid #eee",
+          position: "relative",
         }}
-        onClick={acceptCookies}
-        autoFocus
-        onMouseOver={e => (e.currentTarget.style.transform = "scale(1.1)")}
-        onMouseOut={e => (e.currentTarget.style.transform = "scale(1)")}
       >
-        ACCEPT COOKIES
-      </button>
+        <div style={{ fontWeight: 700, fontSize: "1.19rem", marginBottom: "0.7rem" }}>
+          How we use cookies and your consent
+        </div>
+        <div style={{ fontWeight: 400, fontSize: "1.05rem", lineHeight: 1.6, marginBottom: "1.4rem" }}>
+          We use cookies and similar technologies on our websites to improve them,
+          measure their performance, understand our audience and enhance the user experience.
+          By using our website, you agree to our use of <b>essential cookies</b>.
+          With your consent, we also use analytics cookies to personalize content and analyze our traffic.
+          Read our{" "}
+          <a
+            href="/privacy"
+            style={{ textDecoration: "underline", color: "#2e5ae0" }}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Privacy Policy
+          </a>
+          .
+        </div>
+        <div className="flex flex-row justify-center">
+          <button
+            style={{
+              background: "#f58220",
+              color: "#fff",
+              border: "none",
+              padding: "0.95rem 2.2rem",
+              borderRadius: "2rem",
+              fontWeight: 600,
+              fontSize: "1.15rem",
+              boxShadow: "0 2px 8px 0 #0002",
+              margin: "0 0.5rem",
+              cursor: "pointer",
+            }}
+            onClick={acceptCookies}
+            autoFocus
+          >
+            Accept cookies
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
