@@ -22,4 +22,21 @@ function CookieBanner() {
   );
 }
 
-export default CookieBanner;
+export default function CookieBanner() {
+  return (
+    <div style={{
+      position: "fixed",
+      left: 0,
+      right: 0,
+      bottom: 0,
+      background: "#d72638",
+      color: "#fff",
+      padding: "2rem",
+      zIndex: 99999,
+      textAlign: "center",
+      fontSize: "1.5rem",
+    }}>
+      TEST BANNER. If you see this, your component is being rendered!
+    </div>
+  );
+}
