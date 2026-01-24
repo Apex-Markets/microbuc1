@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { setCookie, getCookie } from "@/lib/cookies";
+import CookieBanner from "@/components/CookieBanner";
 
 function CookieBanner() {
   const [show, setShow] = useState(getCookie("cookieConsent") !== "yes");

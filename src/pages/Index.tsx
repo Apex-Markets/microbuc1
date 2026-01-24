@@ -8,6 +8,7 @@ import { Testimonials } from "@/components/Testimonials";
 import { FAQ } from "@/components/FAQ";
 import { CTASection } from "@/components/CTASection";
 import { Footer } from "@/components/Footer";
+import CookieBanner from "@/components/CookieBanner";
 
 const Index = () => {
   useEffect(() => {
