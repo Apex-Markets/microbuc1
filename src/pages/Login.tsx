@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Eye, EyeOff, ArrowRight, Mail, Lock, Sparkles } from "lucide-react";
+import { setCookie } from "@/lib/cookies";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -12,13 +13,20 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    // Simulate login - replace with actual auth logic
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setIsLoading(false);
-  };
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setIsLoading(true);
+  // Simulate login - replace with actual auth logic
+  await new Promise((resolve) => setTimeout(resolve, 1500));
+
+  // Set a session cookie (replace with your real session/token)
+  setCookie("session", "dummy-session-token", 7); // 7 days, for example
+
+  setIsLoading(false);
+
+  // You might want to redirect user now...
+  // navigate("/dashboard");
+};
 
   return (
     <div className="min-h-screen bg-background flex">
