@@ -62,20 +62,7 @@ export default function CookieBanner() {
             marginBottom: "1.4rem",
           }}
         >
-          We use cookies and similar technologies on our websites to improve them, measure performance, understand our audience and enhance the user experience. By using our website, you agree to our use of <b>essential cookies</b>. With your consent, we also use analytics cookies to personalize content and analyze our traffic. Read our{" "}
-          <a
-            href="/privacy"
-            style={{
-              textDecoration: "underline",
-              color: "#2e69e2",
-              fontWeight: 500,
-            }}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Privacy Policy
-          </a>
-          .
+          We use cookies and similar technologies to improve our website, measure performance, understand usage, and personalize your experience. Some cookies may be used to deliver more relevant content or advertising based on your interests. You can manage your cookie preferences at any time. Essential cookies are always active to ensure the website works properly.
         </div>
         <div className="flex flex-row justify-center">
           <button
