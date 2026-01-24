@@ -7,7 +7,7 @@ const PORT = 5001;
 
 const pool = new Pool({
   host: 'dpg-d4v8gfruibrs73d33750-a.oregon-postgres.render.com',
-  user: 'apex_media_10',                  // <<<<
+  user: 'apex_media_10',              
   password: 'l0GqUC5AAqkbiP1Ol3JtWERc0uil7y3m', 
   database: 'apex_media',
   port: 5432,
@@ -25,6 +25,8 @@ app.post('/api/consent', async (req, res) => {
       req.socket?.remoteAddress ||
       req.connection?.remoteAddress ||
       null;
+    
+    console.log('Received consent data:', { consent, userAgent, geolocation, ip, userId, email, name });
 
     const query = `
       INSERT INTO cookie_consent (consent, timestamp, user_agent, geolocation, ip, user_id, email, name)
@@ -41,6 +43,7 @@ app.post('/api/consent', async (req, res) => {
       name
     ]);
 
+    console.log('Insert succeeded.');
     res.status(200).json({ success: true });
   } catch (err) {
     console.error('Consent API error:', err);
