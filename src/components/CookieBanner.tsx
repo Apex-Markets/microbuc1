@@ -11,8 +11,15 @@ export default function CookieBanner() {
     }
   }, []);
 
+  // Accept all cookies
   const acceptCookies = () => {
     setCookie("cookieConsent", "yes", 365);
+    setShow(false);
+  };
+
+  // Accept only essential cookies
+  const acceptEssentialOnly = () => {
+    setCookie("cookieConsent", "essential", 365);
     setShow(false);
   };
 
@@ -32,17 +39,17 @@ export default function CookieBanner() {
           color: "#222",
           maxWidth: 530,
           width: "92%",
-          borderRadius: "1.375rem", // ~22px
+          borderRadius: "1.375rem",
           border: "1.5px solid #bdbdbd",
           boxShadow: "0 7px 32px 0 #0001",
-          padding: "2rem 2rem 1.5rem 2rem",
+          padding: "2rem 2rem 1.6rem 2rem",
           fontFamily: `Inter, 'Segoe UI', Arial, sans-serif`,
         }}
       >
         <div
           style={{
             fontWeight: 700,
-            fontSize: "1.06rem", // ≈ 17px
+            fontSize: "1.06rem",
             marginBottom: "0.75rem",
             color: "#585858",
             letterSpacing: "0",
@@ -53,7 +60,7 @@ export default function CookieBanner() {
         <div
           style={{
             fontWeight: 400,
-            fontSize: "0.88rem", // ≈ 14px
+            fontSize: "0.88rem",
             color: "#666",
             lineHeight: 1.75,
             marginBottom: "1.6rem",
@@ -61,7 +68,7 @@ export default function CookieBanner() {
         >
           We use cookies and similar technologies to improve our website, measure performance, understand usage, and personalize your experience. Some cookies may be used to deliver more relevant content or advertising based on your interests. You can manage your cookie preferences at any time. Essential cookies are always active to ensure the website works properly.
         </div>
-        <div className="flex flex-row justify-center">
+        <div className="flex flex-row justify-center gap-3">
           <button
             style={{
               background: "#e96717",
@@ -73,7 +80,6 @@ export default function CookieBanner() {
               fontSize: "1.07rem",
               letterSpacing: "0.01em",
               boxShadow: "0 2px 12px 0 #0002",
-              margin: "0 0.3rem",
               cursor: "pointer",
               outline: "none",
               transition: "background 0.18s",
@@ -85,6 +91,27 @@ export default function CookieBanner() {
             autoFocus
           >
             Accept cookies
+          </button>
+          <button
+            style={{
+              background: "#fff",
+              color: "#e96717",
+              border: "1.5px solid #e96717",
+              padding: "0.92rem 1.6rem",
+              borderRadius: "2.2rem",
+              fontWeight: 600,
+              fontSize: "1.02rem",
+              letterSpacing: "0.01em",
+              boxShadow: "0 1px 6px 0 #0001",
+              cursor: "pointer",
+              outline: "none",
+              transition: "background 0.13s,color 0.13s",
+              display: "block",
+              marginLeft: "0.6rem"
+            }}
+            onClick={acceptEssentialOnly}
+          >
+            Essential only
           </button>
         </div>
       </div>
