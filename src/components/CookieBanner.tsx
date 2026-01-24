@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { setCookie, getCookie } from "@/lib/cookies";
 
-// Optional helper function to get user agent string
-const getUserAgent = () => (typeof navigator !== "undefined" ? navigator.userAgent : "");
+// Optional helper: get browser user agent
+const getUserAgent = () =>
+  typeof navigator !== "undefined" ? navigator.userAgent : "";
 
-// Optional: Quickly try to get user's geolocation (can be improved for production)
+// Optional: get user's geolocation (used if allowed)
 const getGeolocation = () =>
   new Promise(resolve => {
     if (typeof navigator === "undefined" || !navigator.geolocation) return resolve(null);
@@ -19,9 +20,10 @@ const getGeolocation = () =>
     );
   });
 
-export default function CookieBanner() {
+export default function CookieBanner({ userId, email, name }) {
   const [show, setShow] = useState(false);
 
+  // Show banner if consent cookie is missing
   useEffect(() => {
     if (getCookie("cookieConsent") !== "yes" && getCookie("cookieConsent") !== "essential") {
       const timeout = setTimeout(() => setShow(true), 4000);
@@ -36,7 +38,6 @@ export default function CookieBanner() {
 
     const geo = await getGeolocation();
 
-    // Send consent record to backend
     fetch("/api/consent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -44,10 +45,14 @@ export default function CookieBanner() {
         consent: "yes",
         userAgent: getUserAgent(),
         geolocation: geo,
-        // Optionally: add user info fields if your app supports login
-        // userId, email, name
+        userId: userId || null,  // optionally pass logged-in user
+        email: email || null,
+        name: name || null
       })
-    });
+    })
+      .then(res => res.json())
+      .then(data => console.log("Consent logged:", data))
+      .catch(err => console.error("Consent logging error:", err));
   };
 
   // Accept only essential cookies
@@ -57,7 +62,6 @@ export default function CookieBanner() {
 
     const geo = await getGeolocation();
 
-    // Send consent record to backend
     fetch("/api/consent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -65,10 +69,14 @@ export default function CookieBanner() {
         consent: "essential",
         userAgent: getUserAgent(),
         geolocation: geo,
-        // Optionally: add user info fields if your app supports login
-        // userId, email, name
+        userId: userId || null,
+        email: email || null,
+        name: name || null
       })
-    });
+    })
+      .then(res => res.json())
+      .then(data => console.log("Consent logged:", data))
+      .catch(err => console.error("Consent logging error:", err));
   };
 
   if (!show) return null;
