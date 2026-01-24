@@ -18,5 +18,6 @@
     "jsx": "react-jsx",
     "lib": ["DOM", "ES2020"]
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["src/pages/api/*.js"]
 }

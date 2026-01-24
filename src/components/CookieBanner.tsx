@@ -1,26 +1,74 @@
 import { useState, useEffect } from "react";
 import { setCookie, getCookie } from "@/lib/cookies";
 
+// Optional helper function to get user agent string
+const getUserAgent = () => (typeof navigator !== "undefined" ? navigator.userAgent : "");
+
+// Optional: Quickly try to get user's geolocation (can be improved for production)
+const getGeolocation = () =>
+  new Promise(resolve => {
+    if (typeof navigator === "undefined" || !navigator.geolocation) return resolve(null);
+    navigator.geolocation.getCurrentPosition(
+      pos =>
+        resolve({
+          lat: pos.coords.latitude,
+          lon: pos.coords.longitude
+        }),
+      () => resolve(null),
+      { timeout: 1500 }
+    );
+  });
+
 export default function CookieBanner() {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    if (getCookie("cookieConsent") !== "yes") {
+    if (getCookie("cookieConsent") !== "yes" && getCookie("cookieConsent") !== "essential") {
       const timeout = setTimeout(() => setShow(true), 4000);
       return () => clearTimeout(timeout);
     }
   }, []);
 
   // Accept all cookies
-  const acceptCookies = () => {
+  const acceptCookies = async () => {
     setCookie("cookieConsent", "yes", 365);
     setShow(false);
+
+    const geo = await getGeolocation();
+
+    // Send consent record to backend
+    fetch("/api/consent", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        consent: "yes",
+        userAgent: getUserAgent(),
+        geolocation: geo,
+        // Optionally: add user info fields if your app supports login
+        // userId, email, name
+      })
+    });
   };
 
   // Accept only essential cookies
-  const acceptEssentialOnly = () => {
+  const acceptEssentialOnly = async () => {
     setCookie("cookieConsent", "essential", 365);
     setShow(false);
+
+    const geo = await getGeolocation();
+
+    // Send consent record to backend
+    fetch("/api/consent", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        consent: "essential",
+        userAgent: getUserAgent(),
+        geolocation: geo,
+        // Optionally: add user info fields if your app supports login
+        // userId, email, name
+      })
+    });
   };
 
   if (!show) return null;
