@@ -8,12 +8,31 @@ import { Testimonials } from "@/components/Testimonials";
 import { FAQ } from "@/components/FAQ";
 import { CTASection } from "@/components/CTASection";
 import { Footer } from "@/components/Footer";
+import { setCookie, getCookie, removeCookie } from "@/lib/cookies";
 import CookieBanner from "@/components/CookieBanner";
 
 const Index = () => {
   useEffect(() => {
-    // Smooth scroll behavior for the entire page
+    // Smooth scroll setup (your existing code)
     document.documentElement.style.scrollBehavior = 'smooth';
+
+    // 1. Track referrer if present in URL (e.g., /?ref=ad123)
+    const params = new URLSearchParams(window.location.search);
+    const ref = params.get("ref");
+    if (ref && !getCookie("referrer")) {
+      setCookie("referrer", ref, 7);
+    }
+
+    // 2. Count page visits (could be your basic analytics)
+    setCookie("visitCount", String(Number(getCookie("visitCount") || 0) + 1), 365);
+
+    // 3. Apply user theme preference if stored in cookie
+    const theme = getCookie("theme");
+    if (theme) {
+      document.documentElement.classList.toggle("dark", theme === "dark");
+    }
+
+    // Clean up
     return () => {
       document.documentElement.style.scrollBehavior = 'auto';
     };
@@ -31,6 +50,7 @@ const Index = () => {
         <FAQ />
         <CTASection />
       </main>
+      <CookieBanner /> {/* Render here, just once! */}
       <Footer />
     </div>
   );
