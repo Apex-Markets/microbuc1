@@ -38,18 +38,18 @@ export default function CookieBanner({ userId, email, name }) {
     const geo = await getGeolocation();
     console.log("DEBUG CONSENT GEO (yes):", geo);
 
-    fetch("/api/consent", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        consent: "yes",
-        userAgent: getUserAgent(),
-        geolocation: geo ? geo : "unknown", // use "unknown" if blocked
-        userId: userId || null,
-        email: email || null,
-        name: name || null
-      })
-    })
+    fetch("https://microbuc-backend.onrender.com/api/consent", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    consent: "yes",
+    userAgent: getUserAgent(),
+    geolocation: geo ? geo : "unknown", // use "unknown" if blocked
+    userId: userId || null,
+    email: email || null,
+    name: name || null
+  })
+})
       .then(res => res.json())
       .then(data => console.log("Consent logged:", data))
       .catch(err => console.error("Consent logging error:", err));
@@ -63,18 +63,18 @@ export default function CookieBanner({ userId, email, name }) {
     const geo = await getGeolocation();
     console.log("DEBUG CONSENT GEO (essential):", geo);
 
-    fetch("/api/consent", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        consent: "essential",
-        userAgent: getUserAgent(),
-        geolocation: geo ? geo : "unknown",
-        userId: userId || null,
-        email: email || null,
-        name: name || null
-      })
-    })
+    fetch("https://microbuc-backend.onrender.com/api/consent", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    consent: "essential",
+    userAgent: getUserAgent(),
+    geolocation: geo ? geo : "unknown",
+    userId: userId || null,
+    email: email || null,
+    name: name || null
+  })
+})
       .then(res => res.json())
       .then(data => console.log("Consent logged:", data))
       .catch(err => console.error("Consent logging error:", err));
