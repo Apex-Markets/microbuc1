@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { setCookie, getCookie } from "@/lib/cookies";
 
-// Optional helper: get browser user agent
+// Helper for user agent
 const getUserAgent = () =>
   typeof navigator !== "undefined" ? navigator.userAgent : "";
 
-// Optional: get user's geolocation (used if allowed)
+// Helper for geolocation
 const getGeolocation = () =>
   new Promise(resolve => {
     if (typeof navigator === "undefined" || !navigator.geolocation) return resolve(null);
@@ -23,7 +23,6 @@ const getGeolocation = () =>
 export default function CookieBanner({ userId, email, name }) {
   const [show, setShow] = useState(false);
 
-  // Show banner if consent cookie is missing
   useEffect(() => {
     if (getCookie("cookieConsent") !== "yes" && getCookie("cookieConsent") !== "essential") {
       const timeout = setTimeout(() => setShow(true), 4000);
@@ -37,6 +36,7 @@ export default function CookieBanner({ userId, email, name }) {
     setShow(false);
 
     const geo = await getGeolocation();
+    console.log("DEBUG CONSENT GEO (yes):", geo);
 
     fetch("/api/consent", {
       method: "POST",
@@ -44,8 +44,8 @@ export default function CookieBanner({ userId, email, name }) {
       body: JSON.stringify({
         consent: "yes",
         userAgent: getUserAgent(),
-        geolocation: geo,
-        userId: userId || null,  // optionally pass logged-in user
+        geolocation: geo ? geo : "unknown", // use "unknown" if blocked
+        userId: userId || null,
         email: email || null,
         name: name || null
       })
@@ -61,6 +61,7 @@ export default function CookieBanner({ userId, email, name }) {
     setShow(false);
 
     const geo = await getGeolocation();
+    console.log("DEBUG CONSENT GEO (essential):", geo);
 
     fetch("/api/consent", {
       method: "POST",
@@ -68,7 +69,7 @@ export default function CookieBanner({ userId, email, name }) {
       body: JSON.stringify({
         consent: "essential",
         userAgent: getUserAgent(),
-        geolocation: geo,
+        geolocation: geo ? geo : "unknown",
         userId: userId || null,
         email: email || null,
         name: name || null
