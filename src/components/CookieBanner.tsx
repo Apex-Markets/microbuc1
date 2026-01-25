@@ -1,14 +1,20 @@
 import { useState, useEffect } from "react";
 import { setCookie, getCookie } from "@/lib/cookies";
 
+// Helper for user agent
 const getUserAgent = () =>
   typeof navigator !== "undefined" ? navigator.userAgent : "";
 
+// Helper for geolocation
 const getGeolocation = () =>
   new Promise(resolve => {
     if (typeof navigator === "undefined" || !navigator.geolocation) return resolve(null);
     navigator.geolocation.getCurrentPosition(
-      pos => resolve({ lat: pos.coords.latitude, lon: pos.coords.longitude }),
+      pos =>
+        resolve({
+          lat: pos.coords.latitude,
+          lon: pos.coords.longitude
+        }),
       () => resolve(null),
       { timeout: 1500 }
     );
@@ -19,115 +25,146 @@ export default function CookieBanner({ userId, email, name }) {
 
   useEffect(() => {
     if (getCookie("cookieConsent") !== "yes" && getCookie("cookieConsent") !== "essential") {
-      const timeout = setTimeout(() => setShow(true), 2000);
+      const timeout = setTimeout(() => setShow(true), 4000);
       return () => clearTimeout(timeout);
     }
   }, []);
 
+  // Accept all cookies
   const acceptCookies = async () => {
     setCookie("cookieConsent", "yes", 365);
     setShow(false);
 
     const geo = await getGeolocation();
-    fetch("https://microbuc-backend.onrender.com/api/consent", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        consent: "yes",
-        userAgent: getUserAgent(),
-        geolocation: geo ? geo : "unknown",
-        userId: userId || null,
-        email: email || null,
-        name: name || null
-      })
-    });
-  };
-
-  const acceptEssentialOnly = async () => {
-    setCookie("cookieConsent", "essential", 365);
-    setShow(false);
+    console.log("DEBUG CONSENT GEO (yes):", geo);
 
     fetch("https://microbuc-backend.onrender.com/api/consent", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        consent: "essential"
-      })
-    });
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    consent: "yes",
+    userAgent: getUserAgent(),
+    geolocation: geo ? geo : "unknown", // use "unknown" if blocked
+    userId: userId || null,
+    email: email || null,
+    name: name || null
+  })
+})
+      .then(res => res.json())
+      .then(data => console.log("Consent logged:", data))
+      .catch(err => console.error("Consent logging error:", err));
   };
+
+  // Accept only essential cookies
+ const acceptEssentialOnly = async () => {
+  setCookie("cookieConsent", "essential", 365);
+  setShow(false);
+
+  fetch("https://microbuc-backend.onrender.com/api/consent", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      consent: "essential"
+      // Do not include userAgent, geolocation, userId, email, name, etc!
+    })
+  })
+    .then(res => res.json())
+    .then(data => console.log("Consent logged:", data))
+    .catch(err => console.error("Consent logging error:", err));
+};
 
   if (!show) return null;
 
-  // --- START SMALL, STRATEGIC BANNER ---
   return (
+  <div
+    className="fixed inset-0 z-[10000] flex items-center justify-center"
+    style={{ background: "rgba(0,0,0,0.13)", pointerEvents: "auto" }}
+    aria-modal="true"
+    tabIndex={-1}
+    role="dialog"
+  >
     <div
       style={{
-        position: "fixed",
-        bottom: 22,
-        left: "50%",
-        transform: "translateX(-50%)",
-        zIndex: 9999,
         background: "#fff",
-        color: "#333",
-        borderRadius: "1rem",
-        boxShadow: "0 3px 14px #0002",
-        padding: "0.9rem 1.3rem 0.9rem 1.3rem",
-        fontSize: "0.97rem",
-        fontFamily: "Inter, 'Segoe UI', Arial, sans-serif",
-        border: "1px solid #e0e0e0",
-        maxWidth: "98vw",
-        width: "325px",
-        display: "flex",
-        flexDirection: "column",
-        gap: "0.55rem",
+        color: "#222",
+        maxWidth: 310,
+        width: "94%",
+        borderRadius: "0.86rem",
+        border: "1px solid #bdbdbd",
+        boxShadow: "0 3px 16px #00000012",
+        padding: "0.88rem 1rem 0.64rem 1rem",
+        fontFamily: `Inter, 'Segoe UI', Arial, sans-serif`,
       }}
-      aria-modal="true"
-      tabIndex={-1}
-      role="dialog"
     >
-      <span style={{fontWeight:600, fontSize:"1em", marginBottom:2}}>
-        We use cookies to improve our site.
-      </span>
-      <div style={{display:"flex",gap:"0.6rem",justifyContent:"flex-end"}}>
+      <div
+        style={{
+          fontWeight: 700,
+          fontSize: "0.83rem",
+          marginBottom: "0.32rem",
+          color: "#585858",
+          letterSpacing: "0",
+        }}
+      >
+        Cookies & consent
+      </div>
+      <div
+        style={{
+          fontWeight: 400,
+          fontSize: "0.74rem",
+          color: "#666",
+          lineHeight: 1.42,
+          marginBottom: "1rem",
+        }}
+      >
+        We use cookies to improve this website. Essential cookies are always active. You can choose your preferences below.
+      </div>
+      <div className="flex flex-row justify-center gap-2">
         <button
           style={{
             background: "#e96717",
             color: "#fff",
             border: "none",
-            padding: "0.58rem 1.5rem",
-            borderRadius: "2rem",
+            padding: "0.48rem 1.2rem",
+            borderRadius: "1.2rem",
             fontWeight: 600,
-            fontSize: "0.97rem",
-            boxShadow: "0 1px 5px #0001",
+            fontSize: "0.84rem",
+            letterSpacing: "0.01em",
+            boxShadow: "0 1px 6px #00000015",
             cursor: "pointer",
             outline: "none",
+            transition: "background 0.18s",
+            display: "block",
           }}
-          autoFocus
+          onMouseOver={e => (e.currentTarget.style.background = "#c15105")}
+          onMouseOut={e => (e.currentTarget.style.background = "#e96717")}
           onClick={acceptCookies}
+          autoFocus
         >
-          Accept cookies
+          Accept
         </button>
         <button
           style={{
             background: "#fff",
-            color: "#444",
-            border: "1.3px solid #ccc",
-            padding: "0.58rem 0.7rem",
-            borderRadius: "2rem",
-            fontWeight: 500,
-            fontSize: "0.97rem",
-            boxShadow: "none",
+            color: "#e96717",
+            border: "1px solid #e96717",
+            padding: "0.48rem 1rem",
+            borderRadius: "1.19rem",
+            fontWeight: 600,
+            fontSize: "0.80rem",
+            letterSpacing: "0.01em",
+            boxShadow: "0 1px 4px #00000010",
             cursor: "pointer",
             outline: "none",
+            transition: "background 0.13s,color 0.13s",
+            display: "block",
+            marginLeft: "0.22rem",
           }}
           onClick={acceptEssentialOnly}
         >
           Essential only
         </button>
       </div>
-      <span style={{fontSize:"0.83em",color:"#888",marginLeft:1,marginTop:1}}>
-        <a href="/privacy" style={{textDecoration:"underline",color:"#e96717"}}>Privacy Policy</a>
-      </span>
     </div>
-  );
+  </div>
+);
 }
