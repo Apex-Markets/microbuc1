@@ -1,6 +1,20 @@
 import { useState, useEffect, useRef } from "react";
 import { setCookie, getCookie } from "@/lib/cookies";
 
+function getDeviceId() {
+  let deviceId = localStorage.getItem('deviceId');
+  if (!deviceId) {
+    deviceId = self.crypto?.randomUUID ? self.crypto.randomUUID() :
+      'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+        const r = (Math.random() * 16) | 0,
+          v = c === "x" ? r : (r & 0x3) | 0x8;
+        return v.toString(16);
+      });
+    localStorage.setItem('deviceId', deviceId);
+  }
+  return deviceId;
+}
+
 // Helper for user agent
 const getUserAgent = () =>
   typeof navigator !== "undefined" ? navigator.userAgent : "";
@@ -79,24 +93,25 @@ export default function CookieBanner({ userId, email, name }) {
 const acceptCookies = async () => {
   acceptClicksRef.current += 1;
   logClick("accept", acceptClicksRef.current);
-
   setCookie("cookieConsent", "yes", 365);
   setShow(false);
-  logDuration(); // duration event
+  logDuration();
 
   const geo = await getGeolocation();
+  const payload = {
+    consent: "yes",
+    userAgent: getUserAgent(),
+    geolocation: geo ? geo : "unknown",
+    userId: userId || null,
+    email: email || null,
+    name: name || null,
+    deviceId: getDeviceId(),
+  };
+  console.log("Consent fetch payload:", payload); // ADD THIS LINE!
   fetch("https://microbuc-backend.onrender.com/api/consent", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      consent: "yes",
-      userAgent: getUserAgent(),
-      geolocation: geo ? geo : "unknown",
-      userId: userId || null,
-      email: email || null,
-      name: name || null,
-      deviceId: getDeviceId(),    // <--- add this line
-    }),
+    body: JSON.stringify(payload),
   })
     .then(res => res.json())
     .then(data => console.log("Consent logged:", data))
