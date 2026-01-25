@@ -55,7 +55,7 @@ const Index = () => {
         <FAQ />
         <CTASection />
       </main>
-          <CookieBanner /> {/* <- Add this line here! */}
+<CookieBanner userId={null} email={null} name={null} />
       <Footer />
     </div>
   );
