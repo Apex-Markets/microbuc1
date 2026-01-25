@@ -76,53 +76,55 @@ export default function CookieBanner({ userId, email, name }) {
   };
 
   // Accept all cookies
-  const acceptCookies = async () => {
-    acceptClicksRef.current += 1;
-    logClick("accept", acceptClicksRef.current);
+const acceptCookies = async () => {
+  acceptClicksRef.current += 1;
+  logClick("accept", acceptClicksRef.current);
 
-    setCookie("cookieConsent", "yes", 365);
-    setShow(false);
-    logDuration(); // duration event
+  setCookie("cookieConsent", "yes", 365);
+  setShow(false);
+  logDuration(); // duration event
 
-    const geo = await getGeolocation();
-    fetch("https://microbuc-backend.onrender.com/api/consent", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        consent: "yes",
-        userAgent: getUserAgent(),
-        geolocation: geo ? geo : "unknown",
-        userId: userId || null,
-        email: email || null,
-        name: name || null,
-      }),
-    })
-      .then(res => res.json())
-      .then(data => console.log("Consent logged:", data))
-      .catch(err => console.error("Consent logging error:", err));
-  };
+  const geo = await getGeolocation();
+  fetch("https://microbuc-backend.onrender.com/api/consent", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      consent: "yes",
+      userAgent: getUserAgent(),
+      geolocation: geo ? geo : "unknown",
+      userId: userId || null,
+      email: email || null,
+      name: name || null,
+      deviceId: getDeviceId(),    // <--- add this line
+    }),
+  })
+    .then(res => res.json())
+    .then(data => console.log("Consent logged:", data))
+    .catch(err => console.error("Consent logging error:", err));
+};
 
-  // Accept only essential cookies
-  const acceptEssentialOnly = async () => {
-    essentialClicksRef.current += 1;
-    logClick("essential", essentialClicksRef.current);
+// Accept only essential cookies
+const acceptEssentialOnly = async () => {
+  essentialClicksRef.current += 1;
+  logClick("essential", essentialClicksRef.current);
 
-    setCookie("cookieConsent", "essential", 365);
-    setShow(false);
-    logDuration();
+  setCookie("cookieConsent", "essential", 365);
+  setShow(false);
+  logDuration();
 
-    fetch("https://microbuc-backend.onrender.com/api/consent", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        consent: "essential"
-        // Do not include userAgent, geolocation, userId, email, name, etc!
-      }),
-    })
-      .then(res => res.json())
-      .then(data => console.log("Consent logged:", data))
-      .catch(err => console.error("Consent logging error:", err));
-  };
+  fetch("https://microbuc-backend.onrender.com/api/consent", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      consent: "essential",
+      deviceId: getDeviceId(),    // <--- add this line
+      // You can decide whether to include other fields here
+    }),
+  })
+    .then(res => res.json())
+    .then(data => console.log("Consent logged:", data))
+    .catch(err => console.error("Consent logging error:", err));
+};
 
   if (!show) return null;
 
