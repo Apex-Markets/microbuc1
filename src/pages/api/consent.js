@@ -20,7 +20,8 @@ app.use(express.json());
 
 app.post('/api/consent', async (req, res) => {
   try {
-    const { consent, userAgent, geolocation, userId, email, name } = req.body;
+        console.log("Consent payload received:", req.body);
+    const { consent, userAgent, geolocation, userId, email, name, deviceId } = req.body;
     const ip =
       req.headers['x-forwarded-for']?.split(',')[0] ||
       req.socket?.remoteAddress ||
@@ -28,8 +29,8 @@ app.post('/api/consent', async (req, res) => {
       null;
 
     const query = `
-      INSERT INTO cookie_consent (consent, timestamp, user_agent, geolocation, ip, user_id, email, name)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+      INSERT INTO cookie_consent (consent, timestamp, user_agent, geolocation, ip, user_id, email, name, device_id)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
     `;
     await pool.query(query, [
       consent,
@@ -39,7 +40,8 @@ app.post('/api/consent', async (req, res) => {
       ip,
       userId,
       email,
-      name
+      name,
+      deviceId       // <--- correctly the 9th param
     ]);
 
     res.status(200).json({ success: true });
@@ -79,6 +81,15 @@ app.post('/api/session', async (req, res) => {
   } catch (err) {
     console.error('Session API error:', err);
     res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.get('/api/dbtest', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT 1');
+    res.json({ ok: true, result: result.rows });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
   }
 });
 
