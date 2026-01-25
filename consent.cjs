@@ -20,6 +20,7 @@ app.use(express.json());
 
 app.post('/api/consent', async (req, res) => {
   try {
+        console.log("Consent payload received:", req.body);
     const { consent, userAgent, geolocation, userId, email, name, deviceId } = req.body;
     const ip =
       req.headers['x-forwarded-for']?.split(',')[0] ||
