@@ -15,6 +15,23 @@ function getDeviceId() {
   return deviceId;
 }
 
+function buildAnonymousPersona() {
+  return {
+    deviceId: getDeviceId(),
+    userAgent: getUserAgent(),
+    language: navigator.language,
+    screen: {
+      width: window.screen.width,
+      height: window.screen.height,
+    },
+    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    platform: navigator.platform,
+    referrer: document.referrer,
+    // Add this line:
+    geolocation: null, // will be filled in later
+  };
+}
+
 // Helper for user agent
 const getUserAgent = () =>
   typeof navigator !== "undefined" ? navigator.userAgent : "";
@@ -40,15 +57,29 @@ export default function CookieBanner({ userId, email, name }) {
   const acceptClicksRef = useRef(0);
   const essentialClicksRef = useRef(0);
 
-  useEffect(() => {
-    if (getCookie("cookieConsent") !== "yes" && getCookie("cookieConsent") !== "essential") {
-      const timeout = setTimeout(() => {
-        setShow(true);
-        appearedAtRef.current = Date.now();
-      }, 4000);
-      return () => clearTimeout(timeout);
-    }
-  }, []);
+ useEffect(() => {
+  // Build the persona right away!
+  const persona = buildAnonymousPersona();
+
+  // Fill in geolocation asynchronously
+  getGeolocation().then(geo => {
+    persona.geolocation = geo || "unknown";
+    fetch("https://microbuc-backend.onrender.com/api/persona", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(persona),
+    }).catch(() => {});
+  });
+
+  // Existing consent logic (for banner) stays as you have it!
+  if (getCookie("cookieConsent") !== "yes" && getCookie("cookieConsent") !== "essential") {
+    const timeout = setTimeout(() => {
+      setShow(true);
+      appearedAtRef.current = Date.now();
+    }, 4000);
+    return () => clearTimeout(timeout);
+  }
+}, []);
 
   // Track duration the cookie banner was visible
   const logDuration = () => {
