@@ -58,7 +58,7 @@ export const Navbar = () => {
   alt="microbuc logo"
   className="w-8 h-8 rounded-lg object-cover"
 />
-<span className="font-bold text-lg group-hover:text-primary transition-colors">microbuc</span>
+<span className="font-bold text-lg group-hover:text-primary transition-colors">Microbuc</span>
           </a>
 
           {/* Desktop nav */}
