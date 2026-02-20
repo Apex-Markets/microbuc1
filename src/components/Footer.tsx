@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { Twitter, Instagram, Linkedin, Github } from "lucide-react";
-import logo from "./web-app-manifest-200x200.png";
-
+import logo from "../web-app-manifest-200x200.png";
 const footerLinks = {
   product: [
     { label: "How it works", href: "#how-it-works" },
