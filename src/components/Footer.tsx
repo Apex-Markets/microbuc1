@@ -51,10 +51,12 @@ export const Footer = () => {
             className="col-span-2 md:col-span-2"
           >
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-sm">M</span>
-              </div>
-              <span className="font-bold text-lg">Micropay</span>
+              <img
+  src="/web-app-manifest-200x200.png"
+  alt="microbuc logo"
+  className="w-8 h-8 rounded-lg object-cover"
+/>
+<span className="font-bold text-lg">microbuc</span>
             </div>
             <p className="text-muted-foreground text-sm max-w-xs mb-6">
               Turn spare change into debt-crushing power. Small round-ups, massive impact.
