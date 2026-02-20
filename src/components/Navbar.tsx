@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
-import logo from "./web-app-manifest-200x200.png";
+import logo from "../web-app-manifest-200x200.png";
 
 const navLinks = [
   { label: "How it works", href: "#how-it-works" },
@@ -53,7 +53,7 @@ export const Navbar = () => {
             onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
             className="flex items-center gap-2 group"
           >
-           <img
+<img
   src={logo}
   alt="microbuc logo"
   className="w-8 h-8 rounded-lg object-cover"

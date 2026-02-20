@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Twitter, Instagram, Linkedin, Github } from "lucide-react";
+import logo from "./web-app-manifest-200x200.png";
 
 const footerLinks = {
   product: [
@@ -51,11 +52,11 @@ export const Footer = () => {
   className="col-span-2 md:col-span-2"
 >
   <div className="flex items-center gap-2 mb-4">
-    <img
-      src="/web-app-manifest-200x200.png"
-      alt="microbuc logo"
-      className="w-8 h-8 rounded-lg object-cover"
-    />
+   <img
+  src={logo}
+  alt="microbuc logo"
+  className="w-8 h-8 rounded-lg object-cover"
+/>
     <span className="font-bold text-lg">microbuc</span>
   </div>
   <p className="text-muted-foreground text-sm max-w-xs mb-6">
