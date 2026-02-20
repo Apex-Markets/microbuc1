@@ -2,6 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
+import logo from "./web-app-manifest-200x200.png";
 
 const navLinks = [
   { label: "How it works", href: "#how-it-works" },
@@ -52,14 +53,12 @@ export const Navbar = () => {
             onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
             className="flex items-center gap-2 group"
           >
-            <motion.div 
-              className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <span className="text-primary-foreground font-bold text-sm">M</span>
-            </motion.div>
-            <span className="font-bold text-lg group-hover:text-primary transition-colors">Micropay</span>
+           <img
+  src={logo}
+  alt="microbuc logo"
+  className="w-8 h-8 rounded-lg object-cover"
+/>
+<span className="font-bold text-lg group-hover:text-primary transition-colors">microbuc</span>
           </a>
 
           {/* Desktop nav */}
