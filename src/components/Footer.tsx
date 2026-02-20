@@ -44,37 +44,37 @@ export const Footer = () => {
       <div className="container">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8 lg:gap-12 mb-12">
           {/* Brand column */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="col-span-2 md:col-span-2"
-          >
-            <div className="flex items-center gap-2 mb-4">
-              <img
-  src="/web-app-manifest-200x200.png"
-  alt="microbuc logo"
-  className="w-8 h-8 rounded-lg object-cover"
-/>
-<span className="font-bold text-lg">microbuc</span>
-            </div>
-            <p className="text-muted-foreground text-sm max-w-xs mb-6">
-              Turn spare change into debt-crushing power. Small round-ups, massive impact.
-            </p>
-            {/* Social links */}
-            <div className="flex gap-4">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  aria-label={social.label}
-                  className="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-primary/10 transition-all"
-                >
-                  <social.icon className="w-4 h-4" />
-                </a>
-              ))}
-            </div>
-          </motion.div>
+         <motion.div
+  initial={{ opacity: 0, y: 20 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  className="col-span-2 md:col-span-2"
+>
+  <div className="flex items-center gap-2 mb-4">
+    <img
+      src="/web-app-manifest-200x200.png"
+      alt="microbuc logo"
+      className="w-8 h-8 rounded-lg object-cover"
+    />
+    <span className="font-bold text-lg">microbuc</span>
+  </div>
+  <p className="text-muted-foreground text-sm max-w-xs mb-6">
+    Turn spare change into debt-crushing power. Small round-ups, massive impact.
+  </p>
+  {/* Social links */}
+  <div className="flex gap-4">
+    {socialLinks.map((social) => (
+      <a
+        key={social.label}
+        href={social.href}
+        aria-label={social.label}
+        className="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-primary/10 transition-all"
+      >
+        <social.icon className="w-4 h-4" />
+      </a>
+    ))}
+  </div>
+</motion.div>
 
           {/* Product links */}
           <motion.div
