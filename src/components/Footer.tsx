@@ -57,7 +57,7 @@ export const Footer = () => {
   alt="microbuc logo"
   className="w-8 h-8 rounded-lg object-cover"
 />
-    <span className="font-bold text-lg">microbuc</span>
+    <span className="font-bold text-lg">Microbuc</span>
   </div>
   <p className="text-muted-foreground text-sm max-w-xs mb-6">
     Turn spare change into debt-crushing power. Small round-ups, massive impact.
