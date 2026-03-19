@@ -56,21 +56,26 @@ const ConnectVisual = () => {
   return (
     <div className="relative flex flex-col gap-3">
       {cards.map((c, i) => (
-        <motion.div
-          key={i}
-          initial={{ opacity: 0, x: 30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.1 + i * 0.12, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-          className="relative rounded-2xl p-4 flex items-center gap-4 overflow-hidden"
-          style={{ background: c.color, boxShadow: "0 8px 32px rgba(0,0,0,0.35)" }}
-        >
+       <motion.div
+  key={i}
+  initial={{ opacity: 0, x: 30 }}
+  whileInView={{ opacity: 1, x: 0 }}
+  viewport={{ once: true }}
+  transition={{ delay: 0.1 + i * 0.12, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+  className="relative rounded-2xl p-4 flex items-center gap-4 overflow-hidden"
+  style={{
+    background: c.img ? `url(${c.img}) center/cover no-repeat` : c.color,
+    boxShadow: "0 8px 32px rgba(0,0,0,0.35)",
+  }}
+>
           {/* EMV chip */}
-          <div className="w-8 h-6 rounded-md shrink-0" style={{ background: c.chip, opacity: 0.85 }}>
-            <div className="w-full h-full rounded-md grid grid-cols-2 gap-px p-0.5 opacity-60">
-              {[...Array(4)].map((_,j)=> <div key={j} className="rounded-sm" style={{background:"rgba(0,0,0,0.25)"}} />)}
-            </div>
-          </div>
+        {!c.img && (
+  <div className="w-8 h-6 rounded-md shrink-0" style={{ background: c.chip, opacity: 0.85 }}>
+    <div className="w-full h-full rounded-md grid grid-cols-2 gap-px p-0.5 opacity-60">
+      {[...Array(4)].map((_, j) => <div key={j} className="rounded-sm" style={{ background: "rgba(0,0,0,0.25)" }} />)}
+    </div>
+  </div>
+)}
           <div className="flex-1 min-w-0">
             <p className="text-[12px] font-semibold text-white/90 truncate">{c.label}</p>
             <p className="text-[11px] text-white/50 font-mono">•••• {c.last4}</p>
