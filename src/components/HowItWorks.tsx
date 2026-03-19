@@ -49,7 +49,7 @@ const SectionLabel = ({ children }: { children: React.ReactNode }) => (
 // ── Step 1 visual: Connect cards ──────────────────────────────────────────
 const ConnectVisual = () => {
   const cards = [
-    { label: "Chase Sapphire", last4: "4821", color: "linear-gradient(135deg, hsl(220 50% 22%), hsl(215 60% 32%))", chip: "#f0b429" },
+  { label: "Chase Sapphire", last4: "4821", color: null, img: "/chase.png", chip: "#f0b429" },
     { label: "Apple Card",     last4: "9034", color: "linear-gradient(135deg, hsl(0 0% 18%), hsl(0 0% 26%))",      chip: "#e5e7eb" },
     { label: "Amex Gold",      last4: "1192", color: "linear-gradient(135deg, hsl(38 65% 35%), hsl(42 70% 45%))",  chip: "#fef3c7" },
   ];
