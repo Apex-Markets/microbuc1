@@ -49,38 +49,37 @@ const SectionLabel = ({ children }: { children: React.ReactNode }) => (
 // ── Step 1 visual: Connect cards ──────────────────────────────────────────
 const ConnectVisual = () => {
   const cards = [
-  { label: "Chase Sapphire", last4: "4821", color: null, img: "/chase.png", chip: "#f0b429" },
-    { label: "Apple Card",     last4: "9034", color: "linear-gradient(135deg, hsl(0 0% 18%), hsl(0 0% 26%))",      chip: "#e5e7eb" },
-    { label: "Amex Gold",      last4: "1192", color: "linear-gradient(135deg, hsl(38 65% 35%), hsl(42 70% 45%))",  chip: "#fef3c7" },
+    { label: "Chase Sapphire", last4: "4821", color: "linear-gradient(135deg, hsl(220 50% 22%), hsl(215 60% 32%))", img: "/chase.png", chip: null },
+    { label: "Apple Card",     last4: "9034", color: "linear-gradient(135deg, hsl(0 0% 18%), hsl(0 0% 26%))",       img: null,        chip: "#e5e7eb" },
+    { label: "Amex Gold",      last4: "1192", color: "linear-gradient(135deg, hsl(38 65% 35%), hsl(42 70% 45%))",   img: null,        chip: "#fef3c7" },
   ];
+
   return (
     <div className="relative flex flex-col gap-3">
       {cards.map((c, i) => (
-       <motion.div
-  key={i}
-  initial={{ opacity: 0, x: 30 }}
-  whileInView={{ opacity: 1, x: 0 }}
-  viewport={{ once: true }}
-  transition={{ delay: 0.1 + i * 0.12, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-  className="relative rounded-2xl p-4 flex items-center gap-4 overflow-hidden"
-  style={{
-    background: c.img ? `url(${c.img}) center/cover no-repeat` : c.color,
-    boxShadow: "0 8px 32px rgba(0,0,0,0.35)",
-  }}
->
-          {/* EMV chip */}
-        {!c.img && (
-  <div className="w-8 h-6 rounded-md shrink-0" style={{ background: c.chip, opacity: 0.85 }}>
-    <div className="w-full h-full rounded-md grid grid-cols-2 gap-px p-0.5 opacity-60">
-      {[...Array(4)].map((_, j) => <div key={j} className="rounded-sm" style={{ background: "rgba(0,0,0,0.25)" }} />)}
-    </div>
-  </div>
-)}
+        <motion.div
+          key={i}
+          initial={{ opacity: 0, x: 30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.1 + i * 0.12, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+          className="relative rounded-2xl p-4 flex items-center gap-4 overflow-hidden"
+          style={{ background: c.color, boxShadow: "0 8px 32px rgba(0,0,0,0.35)" }}
+        >
+          {/* EMV chip or card logo */}
+          {c.img ? (
+            <img src={c.img} alt={c.label} className="w-10 h-8 rounded-md shrink-0 object-contain" />
+          ) : (
+            <div className="w-8 h-6 rounded-md shrink-0" style={{ background: c.chip!, opacity: 0.85 }}>
+              <div className="w-full h-full rounded-md grid grid-cols-2 gap-px p-0.5 opacity-60">
+                {[...Array(4)].map((_, j) => <div key={j} className="rounded-sm" style={{ background: "rgba(0,0,0,0.25)" }} />)}
+              </div>
+            </div>
+          )}
           <div className="flex-1 min-w-0">
             <p className="text-[12px] font-semibold text-white/90 truncate">{c.label}</p>
             <p className="text-[11px] text-white/50 font-mono">•••• {c.last4}</p>
           </div>
-          {/* Connected badge */}
           <motion.div
             initial={{ scale: 0 }} whileInView={{ scale: 1 }} viewport={{ once: true }}
             transition={{ delay: 0.4 + i * 0.12, type: "spring", stiffness: 400, damping: 18 }}
@@ -89,12 +88,11 @@ const ConnectVisual = () => {
           >
             <Check className="w-3 h-3 text-white" strokeWidth={3} />
           </motion.div>
-          {/* Shimmer */}
           <div className="absolute inset-0 pointer-events-none"
             style={{ background: "linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.05) 50%, transparent 60%)" }} />
         </motion.div>
       ))}
-      {/* Bank-level security badge */}
+      {/* Security badge */}
       <motion.div
         initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
         transition={{ delay: 0.6, duration: 0.4 }}
@@ -108,7 +106,7 @@ const ConnectVisual = () => {
           </svg>
         </div>
         <p className="text-[11px]" style={{ color: "hsl(220 15% 55%)" }}>
-          256-bit encryption · Plaid-powered · Read-only access
+          256-bit encryption · Mastercard-powered · Read-only access
         </p>
       </motion.div>
     </div>
