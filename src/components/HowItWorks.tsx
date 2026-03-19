@@ -408,7 +408,7 @@ const steps = [
     icon: CreditCard,
     label: "Connect",
     title: "Link your cards & accounts",
-    description: "Securely connect every card and bank account you use daily. We use Plaid's read-only API — we never touch your money, only observe transactions.",
+    description: "Securely connect every card and bank account you use daily. We use Mastercard Open banking API — we never touch your money, only observe transactions.",
     bullets: ["Debit & credit cards", "Checking accounts", "Instant verification", "256-bit AES encryption"],
     visual: <ConnectVisual />,
     color: "#0ea5e9",
