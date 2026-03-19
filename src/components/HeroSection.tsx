@@ -560,7 +560,6 @@ export const HeroSection = () => {
                 ))}
               </div>
               <p className="text-[13px]" style={{ color: "hsl(var(--muted-foreground))" }}>
-                <span className="text-foreground font-semibold">12,400+</span> people building wealth automatically
               </p>
             </motion.div>
 
