@@ -68,7 +68,7 @@ const cards = [
         >
           {/* EMV chip or card logo */}
           {c.img ? (
-            <img src={c.img} alt={c.label} className="w-10 h-8 rounded-md shrink-0 object-contain" />
+<img src={c.img} alt={c.label} className="w-20 h-14 rounded-md shrink-0 object-contain" />
           ) : (
             <div className="w-8 h-6 rounded-md shrink-0" style={{ background: c.chip!, opacity: 0.85 }}>
               <div className="w-full h-full rounded-md grid grid-cols-2 gap-px p-0.5 opacity-60">
