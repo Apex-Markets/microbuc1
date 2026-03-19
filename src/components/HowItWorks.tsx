@@ -48,11 +48,11 @@ const SectionLabel = ({ children }: { children: React.ReactNode }) => (
 
 // ── Step 1 visual: Connect cards ──────────────────────────────────────────
 const ConnectVisual = () => {
-  const cards = [
-    { label: "Chase Sapphire", last4: "4821", color: "linear-gradient(135deg, hsl(220 50% 22%), hsl(215 60% 32%))", img: "/chase.png", chip: null },
-    { label: "Apple Card",     last4: "9034", color: "linear-gradient(135deg, hsl(0 0% 18%), hsl(0 0% 26%))",       img: null,        chip: "#e5e7eb" },
-    { label: "Amex Gold",      last4: "1192", color: "linear-gradient(135deg, hsl(38 65% 35%), hsl(42 70% 45%))",   img: null,        chip: "#fef3c7" },
-  ];
+const cards = [
+  { label: "Chase Sapphire", last4: "4821", color: "linear-gradient(135deg, hsl(220 50% 22%), hsl(215 60% 32%))", img: "/chase.png",  chip: null },
+  { label: "Apple Card",     last4: "9034", color: "linear-gradient(135deg, hsl(0 0% 18%), hsl(0 0% 26%))",       img: "/apple1.png",  chip: null },
+  { label: "Amex Gold",      last4: "1192", color: "linear-gradient(135deg, hsl(38 65% 35%), hsl(42 70% 45%))",   img: "/amex.png",   chip: null },
+];
 
   return (
     <div className="relative flex flex-col gap-3">
